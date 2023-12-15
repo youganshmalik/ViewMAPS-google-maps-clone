@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view maps</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css">
+    <style>
+        body { margin: 0; padding: 0;}
+        #map { position: absolute; top: 0; bottom: 0; width: 100%;}
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYWRpdHlhNDI4NyIsImEiOiJjbHE2YmJwa2kwZzlpMmtwN2tvdnhtdWluIn0.Vu6M_iZve1_qrnxle37NiQ'
+        navigator.geolocation.getCurrentPosition(successLocation,
+        errorLocation, {
+            enableHighAccuracy: true
+        })
+
+        function successLocation(position){
+            console.log(position)
+
+        }
+
+        function errorLocation(){
+            setupMap([78.9629, 20.5937])
+        }
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/satellite-streets-v12',
+            center: [78.9629, 20.5937],
+            zoom: 3.7
+        });
+        /*const marker1 = new mapboxgl.Marker(
+            color: 'purple',
+            rotation: 45
+        )
+        .setLngLat([78.9629, 20.5937])
+        .addTo(map);*/
+
+        const marker2 = new mapboxgl.Marker({
+            color: 'purple',
+            rotation: 45
+        })
+        .setLngLat([78.9629, 20.5937])
+        .addTo(map);
+
+        map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+        var directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken
+        });
+        map.addControl(directions, 'top-right');
+    
+    </script>
+</body>
+</html>
